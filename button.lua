@@ -1,13 +1,12 @@
-Button = {}
-
+local Button = {}
 function Button.newRect(t)
-    b = {} -- Estrutura do bottão
+    b = {} -- Structure
     _ = {} -- temp var
-    b.default = {}
     _.r, _.g, _.b, _.a = love.graphics.getColor()
+
+    b.default = {}
     b.default.color = { _.r, _.g, _.b, _.a }
     b.default.font = love.graphics.getFont()
-    _ = nil
 
     b.x = t.x or 0
     b.y = t.y or 0
@@ -19,21 +18,29 @@ function Button.newRect(t)
     b.color = { 1, 1, 1, 1 }
     b.font = t.font or b.default.font
     b.mode = "fill"
-
-    function b:draw()
-        love.graphics.setColor(unpack(self.color))
-        love.graphics.rectangle(self.mode, self.x, self.y, self.w, self.h)
-        love.graphics.setColor(unpack(self.text.color))
-        love.graphics.print(
-            self.text.text,
-            self.x + (self.w / 2) - (self.font:getWidth(self.text.text) / 2),
-            self.y + (self.h / 2) - (self.font:getHeight(self.text.text) / 2)
-        )
-    end
+    b.draw = nil
+    b.draws = {
+        inactive = function(self)
+            love.graphics.setColor(unpack(self.color))
+            love.graphics.rectangle(self.mode, self.x, self.y, self.w, self.h)
+            love.graphics.setColor(unpack(self.text.color))
+            love.graphics.print(
+                self.text.text,
+                self.x + (self.w / 2) - (self.font:getWidth(self.text.text) / 2),
+                self.y + (self.h / 2) - (self.font:getHeight(self.text.text) / 2)
+            )
+        end
+    }
 
     function b:update(dt)
+        local touches = love.touch.getTouches()
+
+        for i, id in ipairs(touches) do
+            local x, y = love.touch.getPosition(id)
+        end
     end
 
+    ---[[ Touch
     function b:touchpressed(id, x, y, dx, dy, pressure)
     end
 
@@ -44,6 +51,11 @@ function Button.newRect(t)
     function b:touchreleased(id, x, y, dx, dy, pressure)
     end
 
+    --]]
+
+
+
+    _ = nil
     return b
 end
 
