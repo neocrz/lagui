@@ -73,19 +73,27 @@ function Button.newRect(t)
 
         for i, id in ipairs(touches) do
             local tx, ty = love.touch.getPosition(id)
-            if Col.Rect({ x = tx, y = ty }, { x = self.x, y = self.y, w = self.w, h = self.h }) then self.draw = self.draws.active end
+            if Col.Rect({ x = tx, y = ty }, { x = self.x, y = self.y, w = self.w, h = self.h })
+            then self.draw = self.draws.active end
         end
     end
 
     ---[[ Touch
     function b:touchpressed(id, x, y, dx, dy, pressure)
+        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
+        then self.draw = self.draws.active end
     end
 
     function b:touchmoved(id, x, y, dx, dy, pressure)
-
+        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
+        then self.draw = self.draws.active
+        else self.draw = self.draws.inactive
+        end
     end
 
     function b:touchreleased(id, x, y, dx, dy, pressure)
+        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
+        then self.draw = self.draws.inactive end
     end
 
     --]]
