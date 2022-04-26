@@ -41,7 +41,7 @@ function Button.newRect(t)
     b.text = {}
     b.text.text = t.text.text or ""
     b.text.color = t.text.color or { 0, 0, 0, 1 }
-    b.color = { 1, 1, 1, 1 }
+    b.color = t.color or { 1, 1, 1, 1 }
     b.font = t.font or b.default.font
 
     b.draws = {
@@ -73,7 +73,7 @@ function Button.newRect(t)
 
         for i, id in ipairs(touches) do
             local tx, ty = love.touch.getPosition(id)
-            if Col.Rect({ x = x, y = y }, self) then self.draw = self.draws.active end
+            if Col.Rect({ x = tx, y = ty }, { x = self.x, y = self.y, w = self.w, h = self.h }) then self.draw = self.draws.active end
         end
     end
 
