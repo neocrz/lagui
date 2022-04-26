@@ -43,7 +43,7 @@ function Button.newRect(t)
     b.text.color = t.text.color or { 0, 0, 0, 1 }
     b.color = { 1, 1, 1, 1 }
     b.font = t.font or b.default.font
-    b.draw = nil
+
     b.draws = {
         inactive = function(self)
             love.graphics.setColor(unpack(self.color))
@@ -66,6 +66,7 @@ function Button.newRect(t)
             )
         end
     }
+    b.draw = b.draws.inactive
 
     function b:update(dt)
         local touches = love.touch.getTouches()
