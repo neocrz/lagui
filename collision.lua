@@ -38,12 +38,11 @@ function Collision.twod.circle_collision(c1, c2)
     circle2.y = c2.y or 0
     circle2.r = c2.r or 1
 
-    local dx = (circle1.x + circle1.r) - (circle2.x + circle2.r)
-    local dy = (circle1.y + circle1.r) - (circle2.y + circle2.r)
 
-    local distance = math.sqrt(dx * dx + dy * dy)
+    local distance = math.sqrt((circle2.x - circle1.x) * (circle2.x - circle1.x) +
+        (circle2.y - circle1.y) * (circle2.y - circle1.y))
 
-    if distance < circle1.r + circle2.r then return true else return false end
+    if distance > (circle1.r + circle2.r) * (circle1.r + circle2.r) then return true else return false end
 
 end
 
