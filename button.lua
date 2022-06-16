@@ -1,5 +1,6 @@
 local Button = {}
 local path = (...):match("(.-)[^%.]+$")
+local Cl = require(path .. 'collision')
 
 
 function Button.R(t)
@@ -129,7 +130,20 @@ function Button.R(t)
     end
 
 
+    rect.touchpressed = function(self, id, x, y, dx, dy, pressure)
+        if Cl.rect({ x = x, y = y }, { x = self.x, y = self.y, w = self.w, h = self.h }) then
+            if self.action.pressed then self.action.pressed(self) end
+        end
+    end
 
+    rect.touchmoved = function(self, id, x, y, dx, dy, pressure)
+
+    end
+    rect.touchreleased = function(self, id, x, y, dx, dy, pressure)
+        if Cl.rect({ x = x, y = y }, { x = self.x, y = self.y, w = self.w, h = self.h }) then
+            if self.action.released then self.action.released(self) end
+        end
+    end
 
 
     return rect
