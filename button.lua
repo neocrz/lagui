@@ -203,16 +203,14 @@ function Button.C(t)
     circle.state.inactive = _.state.inactive or function(self) -- Default - inactive draw
         -- Button Color
         love.graphics.setColor(unpack(self.default.color))
-        love.graphics.circle
-        (
+        love.graphics.circle(
             self.default.mode,
             self.x, self.y,
             self.r
         )
         -- Text Color
         love.graphics.setColor(unpack(self.default.text.color))
-        love.graphics.print
-        (
+        love.graphics.print(
             self.default.text.text,
             self.x, self.y
         )
@@ -224,16 +222,14 @@ function Button.C(t)
     circle.state.active = _.state.active or function(self) -- Active draw
         -- Button Color
         love.graphics.setColor(unpack(self.active.color))
-        love.graphics.circle
-        (
+        love.graphics.circle(
             self.active.mode,
             self.x, self.y,
             self.r
         )
         -- Text Color
         love.graphics.setColor(unpack(self.active.text.color))
-        love.graphics.print
-        (
+        love.graphics.print(
             self.active.text.text,
             self.x, self.y
         )
