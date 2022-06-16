@@ -30,20 +30,24 @@ end
 
 function Collision.twod.circle_collision(c1, c2)
     local circle1 = {}
-    local circle2 = {}
     circle1.x = c1.x or 0
     circle1.y = c1.y or 0
-    circle1.r = c1.r or 1
+    circle1.radius = c1.r or 1
+
+    local circle2 = {}
     circle2.x = c2.x or 0
     circle2.y = c2.y or 0
-    circle2.r = c2.r or 1
+    circle2.radius = c2.r or 1
 
+    local dx = circle1.x - circle2.x
+    local dy = circle1.y - circle2.y
+    local distance = math.sqrt(dx * dx + dy * dy)
 
-    local distance = math.sqrt((circle2.x - circle1.x) * (circle2.x - circle1.x) +
-        (circle2.y - circle1.y) * (circle2.y - circle1.y))
-
-    if distance > (circle1.r + circle2.r) * (circle1.r + circle2.r) then return true else return false end
-
+    if (distance < circle1.radius + circle2.radius) then
+        return true
+    else
+        return false
+    end
 end
 
 Collision.rect = Collision.twod.axis_aligned_bounding_box -- Facility
