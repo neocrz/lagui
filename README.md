@@ -9,7 +9,7 @@ GUI utils for touchscreen (LÖVE for Android)
 - [ ] Joystick
 
 ## Windows
-- []
+- [ ]
 
 ## Rollbar
-- []
+- [ ]
