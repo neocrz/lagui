@@ -207,8 +207,8 @@ function Button.C(t)
         love.graphics.setColor(unpack(self.default.text.color))
         love.graphics.print(
             self.default.text.text,
-            self.x - (self.inactive.text.font:getWidth(self.inactive.text.text) / 2),
-            self.y - (self.inactive.text.font:getHeight(self.inactive.text.text) / 2)
+            self.x - (self.default.text.font:getWidth(self.default.text.text) / 2),
+            self.y - (self.default.text.font:getHeight(self.default.text.text) / 2)
         )
 
         -- Return ambient color
