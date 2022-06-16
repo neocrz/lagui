@@ -1,109 +1,138 @@
 local Button = {}
-local Col = {}
-function Col.Rect(r1, r2)
-    local rect1 = {}
-    local rect2 = {}
+local path = (...):match("(.-)[^%.]+$")
 
-    rect1.x = r1.x or 0
-    rect1.y = r1.y or 0
-    rect1.w = r1.w or 1
-    rect1.h = r1.h or 1
 
-    rect2.x = r2.x or 0
-    rect2.y = r2.y or 0
-    rect2.w = r2.w or 1
-    rect2.h = r2.h or 1
-
-    if rect1.x < rect2.x + rect2.w and
-        rect1.x + rect1.w > rect2.x and
-        rect1.y < rect2.y + rect2.h and
-        rect1.h + rect1.y > rect2.y then
-        return true
-    else
-        return false
-    end
-
-end
-
-function Button.newRect(t)
-    b = {} -- Structure
+function Button.R(t)
+    local rect = {}
     _ = {} -- temp var
-    _.r, _.g, _.b, _.a = love.graphics.getColor()
 
-    b.default = {}
-    b.default.color = { _.r, _.g, _.b, _.a }
-    b.default.font = love.graphics.getFont()
-
-    b.x = t.x or 0
-    b.y = t.y or 0
-    b.w = t.w or 0
-    b.h = t.h or 0
-    b.text = {}
-    b.text.text = t.text.text or ""
-    b.text.color = t.text.color or { 0, 0, 0, 1 }
-    b.color = t.color or { 1, 1, 1, 1 }
-    b.font = t.font or b.default.font
-
-    b.draws = {
-        inactive = function(self)
-            love.graphics.setColor(unpack(self.color))
-            love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
-            love.graphics.setColor(unpack(self.text.color))
-            love.graphics.print(
-                self.text.text,
-                self.x + (self.w / 2) - (self.font:getWidth(self.text.text) / 2),
-                self.y + (self.h / 2) - (self.font:getHeight(self.text.text) / 2)
-            )
-        end,
-        active = function(self)
-            love.graphics.setColor(unpack(self.color))
-            love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-            love.graphics.setColor(unpack(self.text.color))
-            love.graphics.print(
-                self.text.text,
-                self.x + (self.w / 2) - (self.font:getWidth(self.text.text) / 2),
-                self.y + (self.h / 2) - (self.font:getHeight(self.text.text) / 2)
-            )
-        end
-    }
-    b.draw = b.draws.inactive
-
-    function b:update(dt)
-        local touches = love.touch.getTouches()
-
-        for i, id in ipairs(touches) do
-            local tx, ty = love.touch.getPosition(id)
-            if Col.Rect({ x = tx, y = ty }, { x = self.x, y = self.y, w = self.w, h = self.h })
-            then self.draw = self.draws.active
-            else self.draw = self.draws.inactive
-            end
-        end
-    end
-
-    ---[[ Touch
-    function b:touchpressed(id, x, y, dx, dy, pressure)
-        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
-        then self.draw = self.draws.active end
-    end
-
-    function b:touchmoved(id, x, y, dx, dy, pressure)
-        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
-        then self.draw = self.draws.active
-        else self.draw = self.draws.inactive
-        end
-    end
-
-    function b:touchreleased(id, x, y, dx, dy, pressure)
-        if Col.Rect({ x = x, y = x }, { x = self.x, y = self.y, w = self.w, h = self.h })
-        then self.draw = self.draws.inactive end
-    end
-
+    ---[[ Default Button color & font
+    _.color = { 0.5, 0.5, 0.5, 1 }
+    _.font = love.graphics.getFont()
     --]]
 
+    ---[[ Button Dimensions
+    rect.x = t.x or 0
+    rect.y = t.y or 0
+    rect.w = t.w or 0
+    rect.h = t.h or 0
+    --]]
 
+    ---[[ Default - or inactive - variables for drawing
+    _.default = t.default or {}
+    _.default.text = _.default.text or {}
+    _.r, _.g, _.b, _.a = love.graphics.getColor()
 
+    rect.ambient_color = { _.r, _.g, _.b, _.a }
+
+    rect.default = {}
+    rect.default.color = _.default.color or _.color
+    rect.default.mode = _.default.mode or "line"
+    rect.default.text = {
+        font = _.default.text.font or _.font,
+        color = _.default.text.color or _.color,
+        text = _.default.text.text or ""
+    }
+    --]]
+
+    ---[[ Active variables for drawing
+    _.active = t.active or {}
+    _.active.text = _.active.text or {}
+
+    rect.active = {}
+    rect.active.color = _.active.color or rect.default.color
+    rect.active.mode = _.active.mode or "fill"
+    rect.active.text = {
+        font = _.active.text.font or rect.default.text.font,
+        color = _.active.text.color or rect.default.text.color,
+        text = _.active.text.text or rect.default.text.text
+    }
+    --]]
+
+    ---[[ Drawing states
+    rect.state = {}
+
+    rect.state.inactive = function(self) -- Default - inactive draw
+        -- Button Color
+        love.graphics.setColor(unpack(self.default.color))
+        love.graphics.rectangle(
+            self.default.mode,
+            self.x, self.y,
+            self.w, self.h
+        )
+        -- Text Color
+        love.graphics.setColor(unpack(self.default.text.color))
+        love.graphics.print(
+            self.default.text.text,
+            self.x + (self.w / 2) - (self.default.text.font:getWidth(self.default.text.text) / 2),
+            self.y + (self.h / 2) - (self.default.text.font:getHeight(self.default.text.text) / 2)
+        )
+
+        -- Return ambient color
+        love.graphics.setColor(unpack(self.ambient_color))
+    end
+
+    rect.state.active = function(self) -- Active draw
+        -- Button Color
+        love.graphics.setColor(unpack(self.active.color))
+        love.graphics.rectangle(
+            self.active.mode,
+            self.x, self.y,
+            self.w, self.h
+        )
+        -- Text Color
+        love.graphics.setColor(unpack(self.active.text.color))
+        love.graphics.print(
+            self.active.text.text,
+            self.x + (self.w / 2) - (self.active.text.font:getWidth(self.active.text.text) / 2),
+            self.y + (self.h / 2) - (self.active.text.font:getHeight(self.active.text.text) / 2)
+        )
+
+        -- Return ambient color
+        love.graphics.setColor(unpack(self.ambient_color))
+    end
+    --]]
+
+    ---[[ Callback Actions
+    _.action = t.action or {}
+
+    rect.action = {}
+    rect.action.pressed = _.action.pressed or nil
+    rect.action.released = _.action.released or nil
+    rect.action.hover = _.action.hover or nil
+    rect.action.out = _.action.out or nil
+    --]]
+
+    rect.draw = rect.state.inactive -- Inactive as default drawing state
     _ = nil
-    return b
+
+    rect.update = function(self, dt)
+        local touches = love.touch.getTouches()
+        if touches[1] then
+            local tch = function()
+                for i, id in ipairs(touches) do
+                    local tx, ty = love.touch.getPosition(id)
+                    if Cl.rect({ x = tx, y = ty }, { x = self.x, y = self.y, w = self.w, h = self.h }) then
+                        self.draw = self.state.active
+                        if self.action.hover then self.action.hover(self) end
+                        return
+                    end
+                end
+                self.draw = self.state.inactive
+                if self.action.out then self.action.out(self) end
+            end
+            tch()
+        else
+            self.draw = self.state.inactive
+            if self.action.out then self.action.out(self) end
+        end
+    end
+
+
+
+
+
+    return rect
 end
 
 return Button
