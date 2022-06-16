@@ -288,4 +288,77 @@ function Button.C(t)
     return circle
 end
 
+function Button.DPAD(t)
+    local dpad = {}
+    local _ = {}
+
+    dpad.x = t.x or 0
+    dpad.y = t.y or 0
+    dpad.r = t.r or 0
+
+    dpad.var = {}
+    dpad.var.x = 0
+    dpad.var.y = 0
+
+    _.circle = t.circle or {}
+    dpad.circle = {}
+    dpad.circle.r = _.circle.r or (dpad.r / 3)
+    dpad.circle.up = Button.C({
+        x = dpad.x,
+        y = dpad.y - dpad.r + dpad.circle.r,
+        r = dpad.circle.r,
+        action = {
+            hover = function(self) dpad.var.y = -1 end,
+            out = function(self) dpad.var.y = 0 end
+        }
+    })
+
+    dpad.circle.down = Button.C({
+        x = dpad.x,
+        y = dpad.y + dpad.r - dpad.circle.r,
+        r = dpad.circle.r,
+        action = {
+            hover = function(self) dpad.var.y = 1 end,
+            out = function(self) dpad.var.y = 0 end
+        }
+    })
+
+    dpad.circle.left = Button.C({
+        x = dpad.x - dpad.r + dpad.circle.r,
+        y = dpad.y,
+        r = dpad.circle.r,
+        action = {
+            hover = function(self) dpad.var.x = -1 end,
+            out = function(self) dpad.var.x = 0 end
+        }
+    })
+
+    dpad.circle.right = Button.C({
+        x = dpad.x + dpad.r - dpad.circle.r,
+        y = dpad.y,
+        r = dpad.circle.r,
+        action = {
+            hover = function(self) dpad.var.x = 1 end,
+            out = function(self) dpad.var.x = 0 end
+        }
+    })
+
+    dpad.draw = function(self)
+        self.circle.up:draw()
+        self.circle.down:draw()
+        self.circle.left:draw()
+        self.circle.right:draw()
+    end
+
+    dpad.update = function(self, dt)
+        self.circle.up:update(dt)
+        self.circle.down:update(dt)
+        self.circle.left:update(dt)
+        self.circle.right:update(dt)
+    end
+
+    _ = nil
+    return dpad
+end
+
 return Button
