@@ -1,7 +1,12 @@
 # LaGUI
+
 GUI utils for touchscreen (LÖVE for Android)
-_obs: I'm not using metatables for now._
+
 [Progress](#Progress) - [Instructions](#Instructions)
+
+
+_obs: I'm not using metatables for now._
+
 ## Progress
 ### Button
 - [x] Rectangle
