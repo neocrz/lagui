@@ -452,7 +452,9 @@ function Button.DPAD(t)
         elseif self.var_y < 0 then self.var_y = -1
         end
     end
-
+    dpad.touchpressed = function(self) end
+    dpad.touchreleased = function(self) end
+    dpad.touchmoved = function(self) end
     _ = nil
     return dpad
 end
