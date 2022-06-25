@@ -14,9 +14,6 @@ _obs: I'm not using metatables for now._
 ### Windows
 - [ ] window system
 
-### Rollbar
-- [ ] roll
-
 ## Instructions
 
 
