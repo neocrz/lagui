@@ -1,6 +1,6 @@
 # LaGUI
 
-GUI utils for touchscreen (LÖVE for Android)
+GUI for touchscreen (LÖVE for Android)
 
 [Progress](#Progress) - [Instructions](#Instructions)
 
@@ -23,10 +23,10 @@ _obs: I'm not using metatables for now._
 
 
 ### Making a easy acess
-Make a `lagui.lua` file that go to lagui file in lagui folder directly
+Make a `lagui.lua` file that goes to the lagui file in the lagui folder directly
 ```lua
--- ./lagui folder
--- ./lagui.lua <- this new file
+-- ./lagui <- lagui folder
+-- ./lagui.lua <- new file
 ```
 ```lua
 -- lagui.lua
