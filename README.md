@@ -29,8 +29,9 @@ function love.load()
   x=100, y = 100, w = 100, h = 30,
   default.text.text = "Hello!",
   actions.released = function(self)
-    self.default.color = {love.math.random( ), love.math.random( ), love.math.random( ), 1},
-  },
+    self.default.color = {love.math.random( ), love.math.random( ), love.math.random( ), 1}
+  end,
+  }
 end
 
 
