@@ -22,17 +22,24 @@ _obs: I'm not using metatables for now._
 ## Instructions
 ```lua
 -- main.lua
-local Lagui = require("lagui.lagui")
 
+local Lagui = require("lagui.lagui")
 function love.load()
-  button = Lagui.Button.R{
-  x=100, y = 100, w = 100, h = 30,
-  default.text.text = "Hello!",
-  actions.released = function(self)
-    self.default.color = {love.math.random( ), love.math.random( ), love.math.random( ), 1}
-  end,
-  }
+  button = Lagui.Button.R({
+    x = 100, y = 100, w = 100, h = 40,
+    default = {
+      text = {
+        text = "Hello!"
+      },
+    },
+    action = {
+      released = function(self)
+        self.default.color = {love.math.random( ), love.math.random( ), love.math.random( ), 1}
+      end,
+    },
+  })
 end
+
 
 
 function love.update(dt)
