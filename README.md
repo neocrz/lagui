@@ -20,18 +20,38 @@ _obs: I'm not using metatables for now._
 - [ ] window system
 
 ## Instructions
-
-
-### Making a easy acess
-Make a `lagui.lua` file that goes to the lagui file in the lagui folder directly
 ```lua
--- ./lagui <- lagui folder
--- ./lagui.lua <- new file
-```
-```lua
--- lagui.lua
-local path = (...):match("(.-)[^%.]+$")
+-- main.lua
+local Lagui = require("lagui.lagui")
 
-return require(path .. "lagui.lagui")
-```
+function love.load()
+  button = Lagui.Button.R{
+  x=100, y = 100, w = 100, h = 30,
+  default.text.text = "Hello!",
+  actions.released = function(self)
+    self.default.color = {love.math.random( ), love.math.random( ), love.math.random( ), 1},
+  },
+end
 
+
+function love.update(dt)
+  button:update(dt)
+end
+
+
+function love.draw()
+  button:draw()
+end
+
+function love.touchmoved( id, x, y, dx, dy, pressure )
+  button:touchmoved( id, x, y, dx, dy, pressure )
+end
+
+function love.touchpressed( id, x, y, dx, dy, pressure )
+  button:touchpressed( id, x, y, dx, dy, pressure )
+end
+
+function love.touchreleased( id, x, y, dx, dy, pressure )
+  button:touchreleased( id, x, y, dx, dy, pressure )
+end
+```
