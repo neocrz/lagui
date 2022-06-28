@@ -5,7 +5,7 @@ GUI for touchscreen (LÖVE for Android)
 [Progress](#Progress) - [Instructions](#Instructions)
 
 
-_obs: I'm not using metatables for now._
+_obs: I'm not using metatables for now. I'm a beginner at this..._
 
 ## Progress
 ### Button
@@ -13,11 +13,6 @@ _obs: I'm not using metatables for now._
 - [x] Circle
 - [x] D-pad
 
-### Joystick
-- [ ] Joystick
-
-### Windows
-- [ ] window system
 
 ## Instructions
 ```lua
