@@ -55,44 +55,44 @@ function Button.R(t)
     rect.state = {}
 
     rect.state.inactive = _.state.inactive or function(self) -- Default - inactive draw
-        -- Button Color
-        love.graphics.setColor(unpack(self.default.color))
-        love.graphics.rectangle(
-            self.default.mode,
-            self.x, self.y,
-            self.w, self.h
-        )
-        -- Text Color
-        love.graphics.setColor(unpack(self.default.text.color))
-        love.graphics.print(
-            self.default.text.text,
-            self.x + (self.w / 2) - (self.default.text.font:getWidth(self.default.text.text) / 2),
-            self.y + (self.h / 2) - (self.default.text.font:getHeight(self.default.text.text) / 2)
-        )
+            -- Button Color
+            love.graphics.setColor(unpack(self.default.color))
+            love.graphics.rectangle(
+                self.default.mode,
+                self.x, self.y,
+                self.w, self.h
+            )
+            -- Text Color
+            love.graphics.setColor(unpack(self.default.text.color))
+            love.graphics.print(
+                self.default.text.text,
+                self.x + (self.w / 2) - (self.default.text.font:getWidth(self.default.text.text) / 2),
+                self.y + (self.h / 2) - (self.default.text.font:getHeight(self.default.text.text) / 2)
+            )
 
-        -- Return ambient color
-        love.graphics.setColor(unpack(self.ambient_color))
-    end
+            -- Return ambient color
+            love.graphics.setColor(unpack(self.ambient_color))
+        end
 
     rect.state.active = _.state.active or function(self) -- Active draw
-        -- Button Color
-        love.graphics.setColor(unpack(self.active.color))
-        love.graphics.rectangle(
-            self.active.mode,
-            self.x, self.y,
-            self.w, self.h
-        )
-        -- Text Color
-        love.graphics.setColor(unpack(self.active.text.color))
-        love.graphics.print(
-            self.active.text.text,
-            self.x + (self.w / 2) - (self.active.text.font:getWidth(self.active.text.text) / 2),
-            self.y + (self.h / 2) - (self.active.text.font:getHeight(self.active.text.text) / 2)
-        )
+            -- Button Color
+            love.graphics.setColor(unpack(self.active.color))
+            love.graphics.rectangle(
+                self.active.mode,
+                self.x, self.y,
+                self.w, self.h
+            )
+            -- Text Color
+            love.graphics.setColor(unpack(self.active.text.color))
+            love.graphics.print(
+                self.active.text.text,
+                self.x + (self.w / 2) - (self.active.text.font:getWidth(self.active.text.text) / 2),
+                self.y + (self.h / 2) - (self.active.text.font:getHeight(self.active.text.text) / 2)
+            )
 
-        -- Return ambient color
-        love.graphics.setColor(unpack(self.ambient_color))
-    end
+            -- Return ambient color
+            love.graphics.setColor(unpack(self.ambient_color))
+        end
     --]]
 
     ---[[ Callback Actions
@@ -146,6 +146,12 @@ function Button.R(t)
         end
     end
 
+    rect.mousereleased = function(self, x, y, button, istouch, presses)
+        if istouch then return end
+        if Cl.rect({ x = x, y = y }, { x = self.x, y = self.y, w = self.w, h = self.h }) then
+            if self.action.released then self.action.released(self) end
+        end
+    end
 
     return rect
 end
@@ -201,35 +207,35 @@ function Button.C(t)
     circle.state = {}
 
     circle.state.inactive = _.state.inactive or function(self) -- Default - inactive draw
-        love.graphics.setColor(unpack(self.default.color))
-        love.graphics.circle(self.default.mode, self.x, self.y, self.r)
-        -- Text Color
-        love.graphics.setColor(unpack(self.default.text.color))
-        love.graphics.print(
-            self.default.text.text,
-            self.x - (self.default.text.font:getWidth(self.default.text.text) / 2),
-            self.y - (self.default.text.font:getHeight(self.default.text.text) / 2)
-        )
+            love.graphics.setColor(unpack(self.default.color))
+            love.graphics.circle(self.default.mode, self.x, self.y, self.r)
+            -- Text Color
+            love.graphics.setColor(unpack(self.default.text.color))
+            love.graphics.print(
+                self.default.text.text,
+                self.x - (self.default.text.font:getWidth(self.default.text.text) / 2),
+                self.y - (self.default.text.font:getHeight(self.default.text.text) / 2)
+            )
 
-        -- Return ambient color
-        love.graphics.setColor(unpack(self.ambient_color))
-    end
+            -- Return ambient color
+            love.graphics.setColor(unpack(self.ambient_color))
+        end
 
     circle.state.active = _.state.active or function(self) -- Active draw
-        -- Button Color
-        love.graphics.setColor(unpack(self.active.color))
-        love.graphics.circle(self.active.mode, self.x, self.y, self.r)
-        -- Text Color
-        love.graphics.setColor(unpack(self.active.text.color))
-        love.graphics.print(
-            self.active.text.text,
-            self.x - (self.active.text.font:getWidth(self.active.text.text) / 2),
-            self.y - (self.active.text.font:getHeight(self.active.text.text) / 2)
-        )
+            -- Button Color
+            love.graphics.setColor(unpack(self.active.color))
+            love.graphics.circle(self.active.mode, self.x, self.y, self.r)
+            -- Text Color
+            love.graphics.setColor(unpack(self.active.text.color))
+            love.graphics.print(
+                self.active.text.text,
+                self.x - (self.active.text.font:getWidth(self.active.text.text) / 2),
+                self.y - (self.active.text.font:getHeight(self.active.text.text) / 2)
+            )
 
-        -- Return ambient color
-        love.graphics.setColor(unpack(self.ambient_color))
-    end
+            -- Return ambient color
+            love.graphics.setColor(unpack(self.ambient_color))
+        end
     --]]
 
     ---[[ Callback Actions
@@ -279,6 +285,13 @@ function Button.C(t)
     end
 
     circle.touchreleased = function(self, id, x, y, dx, dy, pressure)
+        if Cl.circle({ x = x, y = y }, { x = self.x, y = self.y, r = self.r }) then
+            if self.action.released then self.action.released(self) end
+        end
+    end
+
+    circle.mousereleased = function(self, x, y, button, istouch, presses)
+        if istouch then return end
         if Cl.circle({ x = x, y = y }, { x = self.x, y = self.y, r = self.r }) then
             if self.action.released then self.action.released(self) end
         end
@@ -444,17 +457,24 @@ function Button.DPAD(t)
         self.var_y = self.circle.up.v + self.circle.down.v + self.circle.up_right.v_y + self.circle.right_down.v_y +
             self.circle.down_left.v_y + self.circle.left_up.v_y
 
-        if self.var_x > 0 then self.var_x = 1
-        elseif self.var_x < 0 then self.var_x = -1
+        if self.var_x > 0 then
+            self.var_x = 1
+        elseif self.var_x < 0 then
+            self.var_x = -1
         end
 
-        if self.var_y > 0 then self.var_y = 1
-        elseif self.var_y < 0 then self.var_y = -1
+        if self.var_y > 0 then
+            self.var_y = 1
+        elseif self.var_y < 0 then
+            self.var_y = -1
         end
     end
-    dpad.touchpressed = function(self) end
-    dpad.touchreleased = function(self) end
-    dpad.touchmoved = function(self) end
+    dpad.touchpressed = function(self)
+    end
+    dpad.touchreleased = function(self)
+    end
+    dpad.touchmoved = function(self)
+    end
     _ = nil
     return dpad
 end
