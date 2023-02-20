@@ -8,5 +8,5 @@ local cwd   = (...):gsub('%.init$', '') .. "."
 ]]
 Lagui.Button = require(cwd .. 'button')
 Lagui.Joy = require(cwd .. "joy")
-
+Lagui.Box = require(cwd .. "box")
 return Lagui

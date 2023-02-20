@@ -4,22 +4,21 @@ GUI for touchscreen (LÖVE for Android)
 
 [Progress](#Progress) - [Instructions](#Instructions)
 
+
 _obs: I'm not using metatables for now. I'm a beginner at this..._
 
 ## Progress
-
 ### Button
-
 - [x] Rectangle
 - [x] Circle
 - [x] D-pad
 
-## Instructions
 
+## Instructions
 ```lua
 -- main.lua
 
-local Lagui = require("lagui")
+local Lagui = require("lagui.lagui")
 function love.load()
   button = Lagui.Button.R({
     x = 100, y = 100, w = 100, h = 40,
