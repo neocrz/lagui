@@ -290,13 +290,6 @@ function Button.C(t)
         end
     end
 
-    circle.mousereleased = function(self, x, y, button, istouch, presses)
-        if istouch then return end
-        if Cl.circle({ x = x, y = y }, { x = self.x, y = self.y, r = self.r }) then
-            if self.action.released then self.action.released(self) end
-        end
-    end
-
 
     return circle
 end
