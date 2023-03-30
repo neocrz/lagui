@@ -5,9 +5,10 @@ GUI for touchscreen (LÖVE for Android)
 [Progress](#Progress) - [Instructions](#Instructions)
 
 
-_obs: I'm not using metatables for now. I'm a beginner at this..._
+_obs: I'm not using metatables for now._
 
 ## Progress
+Paused.
 ### Button
 - [x] Rectangle
 - [x] Circle
